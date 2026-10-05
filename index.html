@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capital City Development Ltd | Land in Port Harcourt</title>
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+  <style>
+    :root {
+      /* Brand colours */
+      --chat--color-primary: #c9a227;          /* gold */
+      --chat--color-primary-shade-50: #b08d1f;
+      --chat--color-primary-shade-100: #977919;
+      --chat--color-secondary: #0f3d2e;        /* dark green */
+      --chat--color-secondary-shade-50: #0b2e22;
+      --chat--color-white: #ffffff;
+      --chat--color-light: #f7f5ef;
+      --chat--color-dark: #1c1c1c;
 
+      --chat--header--background: #0f3d2e;
+      --chat--header--color: #ffffff;
+      --chat--toggle--background: #0f3d2e;
+      --chat--toggle--hover--background: #0b2e22;
+      --chat--toggle--size: 64px;
+      --chat--message--bot--background: #ffffff;
+      --chat--message--user--background: #0f3d2e;
+      --chat--message--user--color: #ffffff;
+      --chat--window--width: 400px;
+      --chat--window--height: 600px;
+      --chat--border-radius: 12px;
+    }
+    body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; background: #f7f5ef; color: #1c1c1c; }
+    header { background: #0f3d2e; color: #fff; padding: 20px 24px; border-bottom: 4px solid #c9a227; }
+    header h1 { margin: 0; color: #c9a227; letter-spacing: 2px; font-size: 22px; }
+    .hero { max-width: 900px; margin: 0 auto; padding: 60px 24px; text-align: center; }
+    .hero h2 { font-size: 34px; color: #0f3d2e; margin-bottom: 12px; }
+    .hero p { font-size: 18px; color: #444; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 28px; }
+    .chip { background: #fff; border: 2px solid #c9a227; color: #0f3d2e; padding: 10px 18px;
+            border-radius: 999px; font-weight: 600; cursor: pointer; }
+    .chip:hover { background: #c9a227; color: #fff; }
+    .trust { margin-top: 36px; font-size: 14px; color: #666; }
+    .wa { display: inline-block; margin-top: 24px; background: #25D366; color: #fff; padding: 12px 22px;
+          border-radius: 8px; text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header><h1>CAPITAL CITY DEVELOPMENT LTD</h1></header>
+
+  <section class="hero">
+    <h2>Find, price and reserve your plot in minutes</h2>
+    <p>Chat with our assistant 24/7. Tap a topic below or open the chat bubble.</p>
+
+    <div class="chips">
+      <button class="chip" data-msg="Show me the available estates">View estates</button>
+      <button class="chip" data-msg="I want to calculate the cost of plots">Calculate plot cost</button>
+      <button class="chip" data-msg="I want to check my survey status">Check survey status</button>
+      <button class="chip" data-msg="I want to reserve a plot">Reserve a plot</button>
+    </div>
+
+    <a class="wa" href="https://wa.me/2349126700953?text=Hello%2C%20I%27m%20interested%20in%20a%20plot"
+       target="_blank">Talk to a human on WhatsApp</a>
+
+    <p class="trust">Verified titles · Contract of Sale Agreement · Flexible payment plans</p>
+  </section>
+
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+    createChat({
+      webhookUrl: 'https://livecom.app.n8n.cloud/webhook/0cda95f2-da83-4653-91c3-21ba58b32185/chat',
+      mode: 'window',
+      showWelcomeScreen: false,
+      loadPreviousSession: false,
+      initialMessages: [
+        'Welcome to Capital City Development Ltd!',
+        'I can show you our estates, calculate plot costs, check survey status, or reserve a plot for you. How can I help?'
+      ],
+      i18n: {
+        en: {
+          title: 'Capital City Development Ltd',
+          subtitle: 'Typically replies instantly',
+          footer: '',
+          getStarted: 'Start chat',
+          inputPlaceholder: 'Type your message...',
+        },
+      },
+    });
+
+    // Quick-topic buttons: open the chat and send the message
+    document.querySelectorAll('.chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const toggle = document.querySelector('.chat-window-toggle');
+        const isOpen = document.querySelector('.chat-window-wrapper .chat-window');
+        if (toggle && !isOpen) toggle.click();
+        setTimeout(() => {
+          const input = document.querySelector('.chat-inputs textarea');
+          if (!input) return;
+          input.value = btn.dataset.msg;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+        }, 400);
+      });
+    });
+  </script>
+</body>
+</html>
